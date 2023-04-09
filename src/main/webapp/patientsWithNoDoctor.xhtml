@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Keep It Simple &amp; Stupid</title>
+</h:head>
+
+<h:body>
+<f:view>
+<h:form>
+
+	[ <a href="#{facesContext.externalContext.applicationContextPath}/faces/all.xhtml">All</a> |
+	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editPerson.xhtml?email=NULL">Add new person</a> |
+	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editDoctor.xhtml?email=NULL">Add new doctor</a>|
+		<a href="#{facesContext.externalContext.applicationContextPath}/faces/patientsWithNoDoctor.xhtml?email=NULL">Patients no doctor</a> ]
+	<hr />
+	
+	<h:dataTable value="#{app.patientsNoDoctors}" var="o">
+		<h:column>
+			<h:link value="#{o.email}" outcome="details">
+				<f:param name="email" value="#{o.email}" />
+			</h:link>
+		</h:column>
+		<h:column>#{o}</h:column>
+		<h:column>
+			<h:link value="Edit" outcome="editPerson">
+				<f:param name="email" value="#{o.email}" />
+			</h:link> |
+	   <p:commandButton value="Delete" type="button" onclick="PF('dlg').show();" style="width:70px;height:30px;text-align:center"/>
+       <p:dialog header="Are you sure?" widgetVar="dlg" modal="true" minHeight="120">
+       		<h:commandLink value="Yes, delete" actionListener="#{app.deletePerson(o)}" />
+       </p:dialog>
+		</h:column>
+	</h:dataTable>
+	
+	
+</h:form>
+
+</f:view>
+</h:body>
+
+</html>

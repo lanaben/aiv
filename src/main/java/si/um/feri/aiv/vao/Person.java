@@ -1,21 +1,31 @@
 package si.um.feri.aiv.vao;
 
 import java.text.SimpleDateFormat;
+import java.io.Serializable;
+
+import si.um.feri.aiv.vmesni_nivo.Email;
+import si.um.feri.aiv.opazovalci.IObserver;
+
+import java.util.*;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import jakarta.validation.constraints.NotBlank;
 
-public class Person {
+public class Person implements Serializable{
 
 	public Person() {
-		this("", "","");
+		this("", "","", "","",null);
 	}
 	
-	public Person(String ime, String priimek, String email) {
+	public Person(String ime, String priimek, String email, String datum, String besedilo, Doctor patientsDoctor) {
 		this.email = email;
 		this.name = ime;
 		this.surname = priimek;
 		timestamp =new GregorianCalendar();
+		this.date = datum;
+		this.text = besedilo;
+		this.patientsDoctor = patientsDoctor;
 	}
 	
 	@NotBlank
@@ -23,6 +33,32 @@ public class Person {
 	private String name;
 	private String surname;
 	private Calendar timestamp;
+	private String date;
+	private String text;
+	private Doctor patientsDoctor;
+	
+	private List<IObserver> patientsObservers1 = new ArrayList<>();
+	private List<IObserver> patientsObservers2 = new ArrayList<>();
+	
+	public void addPatientsObserver1(IObserver p) {
+		patientsObservers1.add(p);
+	}
+	
+	public void callPatientsObserver1(Person p) {
+		for (IObserver i:patientsObservers1) {
+			i.update(p);
+		}
+	}
+	
+	public void addPatientsObserver2(IObserver p) {
+		patientsObservers2.add(p);
+	}
+	
+	public void callPatientsObserver2(Doctor p) {
+		for (IObserver i:patientsObservers2) {
+			i.update(this, p);
+		}
+	}
 
 	public String getName() {
 		return name;
@@ -55,12 +91,41 @@ public class Person {
 	public void setTimestamp(Calendar timestamp) {
 		this.timestamp = timestamp;
 	}
+	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	public Doctor getPatientsDoctor() {
+		return patientsDoctor;
+	}
+
+	public void setPatientsDoctor(Doctor patientsDoctor) {
+		this.patientsDoctor = patientsDoctor;
+	}
 
 	private static SimpleDateFormat sdf=new SimpleDateFormat("dd. MM. yyyy HH:mm:ss");
+	
 
 	@Override
 	public String toString() {
-		return name + " " + surname + " ("+email+"); vpis: "+sdf.format(timestamp.getTime());
+		if(getPatientsDoctor() != null) {
+			return name + " " + surname + " ("+email+"); vpis: "+sdf.format(timestamp.getTime()) + " " + date + " " + text + " " + getPatientsDoctor().getName() + " " + getPatientsDoctor().getSurname();
+		}else {
+			return name + " " + surname + " ("+email+"); vpis: "+sdf.format(timestamp.getTime()) + " " + date + " " + text;
+		}
 	}
 	
 }
