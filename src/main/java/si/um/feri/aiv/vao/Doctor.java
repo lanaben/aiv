@@ -27,7 +27,6 @@ public class Doctor {
 	private String surname;
 	private String email;
 	private Double numPatient;
-	private String[] patients;
 	private String id;
 
 	public String getName() {
@@ -53,7 +52,6 @@ public class Doctor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	
 	public Double getNumPatient() {
 		return numPatient;
@@ -71,10 +69,9 @@ public class Doctor {
 		this.id = id;
 	}
 
-
 	@Override
 	public String toString() {
-		return this.name + " " + this.surname + " " + this.email + " Number of patients:" + this.numPatient + " ";
+		return this.name + " " + this.surname + " ;" + this.email + "; Število možnih pacientov: " + this.numPatient + " ";
 	}
 	
 }

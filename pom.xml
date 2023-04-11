@@ -15,7 +15,23 @@
 			<version>9.1.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+		    <groupId>jakarta.annotation</groupId>
+		    <artifactId>jakarta.annotation-api</artifactId>
+		    <version>2.0.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.primefaces</groupId>
+		    <artifactId>primefaces</artifactId>
+		    <version>12.0.0</version>
+		    <classifier>jakarta</classifier>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.sun.mail/smtp -->
+
 	</dependencies>
+	
 	
 	<build>
 		<finalName>FirstLectures</finalName>
@@ -32,12 +48,33 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+				  <add-user>
+		            <users>
+		                <user>
+		                    <username>admin</username>
+		                    <password>admin.1234</password>
+		                </user>
+		            </users>
+		          </add-user>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.3.1</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<!-- this is false by default -->
+					<generateClient>true</generateClient>
+				</configuration>
+		</plugin>
+
+	
 		</plugins>
 	</build>
 	

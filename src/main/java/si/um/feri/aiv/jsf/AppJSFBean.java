@@ -6,16 +6,15 @@ import java.util.logging.Logger;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
-import si.um.feri.aiv.ejb.PersonDao;
-import si.um.feri.aiv.ejb.PersonMemoryDao;
 import si.um.feri.aiv.vao.Person;
 import si.um.feri.aiv.ejb.DoctorDao;
 import si.um.feri.aiv.ejb.DoctorMemoryDao;
+import si.um.feri.aiv.ejb.PersonDao;
+import si.um.feri.aiv.ejb.PersonMemoryDao;
 import si.um.feri.aiv.vao.Doctor;
 
 import si.um.feri.aiv.vmesni_nivo.Email;
 import si.um.feri.aiv.opazovalci.PatientObserver1;
-import si.um.feri.aiv.opazovalci.PatientObserver2;
 
 @Named("app")
 @SessionScoped
@@ -43,12 +42,8 @@ public class AppJSFBean implements Serializable {
 	
 	public String savePerson() throws Exception {
 		
-		log.info(selectedPerson.getEmail());
-		log.info(oldPerson.getEmail());
-		
 		if(oldPerson.getEmail() != "") {
-			selectedPerson.addPatientsObserver2(new PatientObserver2());
-			selectedPerson.callPatientsObserver2(selectedPerson.getPatientsDoctor());
+			selectedPerson.createObserver2(selectedPerson);
 		}
 		
 		int index = 0;
@@ -66,6 +61,11 @@ public class AppJSFBean implements Serializable {
 			
 			List<Person> listPatients = getAllPeople();
 			double count = 0;
+
+			if(selectedDoctor.getNumPatient() == 0) {
+				Email email = new Email(selectedPerson.getEmail(), "lana.benedicic@gmail.com", "Zdravnik ni izbran", "Kvota zdravnika je že dosežena. Izberite drugega zdravnika.");
+				email.send();
+			}
 			
 			for(int i = 0; i < listPatients.size(); i++) {
 					if (listPatients.get(i).getPatientsDoctor() != null && listPatients.get(i).getPatientsDoctor().equals(selectedDoctor)) {
@@ -74,7 +74,7 @@ public class AppJSFBean implements Serializable {
 						if (count == selectedDoctor.getNumPatient()) {
 							//send email to patient doctor cant be chosen
 							//break
-							Email email = new Email(selectedPerson.getEmail(), "mihec.korosec@gmail.com", "Zdravnik ni izbran", "Kvota zdravnika je že dosežena. Izberite drugega zdravnika.");
+							Email email = new Email(selectedPerson.getEmail(), "lana.benedicic@gmail.com", "Zdravnik ni izbran", "Kvota zdravnika je že dosežena. Izberite drugega zdravnika.");
 							email.send();
 							break;
 						}
@@ -82,18 +82,17 @@ public class AppJSFBean implements Serializable {
 			}
 			
 			if (count < selectedDoctor.getNumPatient()) {
+
+				//set patients doctor
 				selectedPerson.setPatientsDoctor(doctors.get(index));
 				daoPerson.save(selectedPerson);
 				
 				//email to patient and doctor it was chosen
-				Email emailPerson = new Email(selectedPerson.getEmail(), "mihec.korosec@gmail.com", "Zdravnik je izbran", "Izbrali ste zdravnika.");
-				emailPerson.send();
-				Email emailDoctor = new Email(doctors.get(index).getEmail(), "mihec.korosec@gmail.com", "Pacient je bil dodan", "Dobili ste novega pacienta");
+				Email emailDoctor = new Email(doctors.get(index).getEmail(), "lana.benedicic@gmail.com", "Pacient je bil dodan", "Dobili ste novega pacienta");
 				emailDoctor.send();
 			}
 			
-			selectedPerson.addPatientsObserver1(new PatientObserver1());
-			selectedPerson.callPatientsObserver1(selectedPerson);
+			selectedPerson.createObserver1(selectedPerson);
 		
 			
 		} else if (this.selectedPatientsDoctor == null){
@@ -186,14 +185,12 @@ public class AppJSFBean implements Serializable {
 		for(int i = 0; i < people.size(); i++) {
 			if (people.get(i).getPatientsDoctor() == null) {
 				patientsWithNoDoc.add(people.get(i));
-				log.info("added");
+				
 			}
 			else {
 				continue;
 			}
 		}
-		
-		log.info("patientsWithNoDoc");
 		return patientsWithNoDoc;
 	}
 }

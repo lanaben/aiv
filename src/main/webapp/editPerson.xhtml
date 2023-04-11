@@ -5,40 +5,40 @@
 
 <h:head>
 	<meta charset="UTF-8" />
-	<title>Keep It Simple &amp; Stupid</title>
+	<title>Vstopi v sistem e-zdravje</title>
 </h:head>
 
 <h:body>
 <f:view>
 <h:form>
 
-	[ <a href="#{facesContext.externalContext.applicationContextPath}/faces/all.xhtml">All</a> |
-	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editPerson.xhtml?email=NULL">Add new person</a> |
-	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editDoctor.xhtml?email=NULL">Add new doctor</a>|
-		<a href="#{facesContext.externalContext.applicationContextPath}/faces/patientsWithNoDoctor.xhtml?email=NULL">Patients no doctor</a> ]
+		[ <a href="#{facesContext.externalContext.applicationContextPath}/faces/all.xhtml">Vsi zdravniki in pacienti</a> |
+	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editPerson.xhtml?email=NULL">Dodaj pacienta</a> |
+	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editDoctor.xhtml?email=NULL">Dodaj zdravnika</a>|
+		<a href="#{facesContext.externalContext.applicationContextPath}/faces/patientsWithNoDoctor.xhtml?email=NULL">Pacienti brez zdravnika</a> ]
 	<hr />
 
 	<f:metadata>
 		<f:viewParam name="email" value="#{app.selectedEmailPerson}" />
 	</f:metadata>
 	
-	Name: <h:inputText id="n_ime" value="#{app.selectedPerson.name}"/><br/>
-	Surname: <h:inputText id="n_priimek" value="#{app.selectedPerson.surname}"/><br/>
+	Ime: <h:inputText id="n_ime" value="#{app.selectedPerson.name}"/><br/>
+	Priimek: <h:inputText id="n_priimek" value="#{app.selectedPerson.surname}"/><br/>
 	E-mail: <h:inputText id="n_email" value="#{app.selectedPerson.email}" validatorMessage="Insert valid e-mail">
 				<f:validateRequired />
 			</h:inputText> * <h:message for="n_email" style="color:red" />
 	<br/>
-	Date: <h:inputText id="n_datum" value="#{app.selectedPerson.date}"/><br/>
-	Text (comment): <h:inputText id="n_tekst" value="#{app.selectedPerson.text}"/><br/><br/>
+	Datum rojstva: <h:inputText id="n_datum" value="#{app.selectedPerson.date}"/><br/>
+	Opomba: <h:inputText id="n_tekst" value="#{app.selectedPerson.text}"/><br/><br/>
 	
 	Izbrani zdravnik: 
 
      <h:selectOneListbox  value="#{app.selectedPatientsDoctor}">
-     	 <f:selectItem itemValue="#{null}" itemLabel="No doctor" />
+     	 <f:selectItem itemValue="#{null}" itemLabel="Brez zdravnika" />
      	 <f:selectItems value="#{app.allDoctors}" var="doctor" itemLabel="#{doctor.name}" itemValue="#{doctor.id}"/> 
      </h:selectOneListbox>
-     
-	<h:commandButton value="Save" action="#{app.savePerson}"/>
+     <br/>
+	<h:commandButton value="Shrani" action="#{app.savePerson}"/>
 	
 </h:form>
 

@@ -84,8 +84,8 @@ public class Email implements Serializable {
         }
         */
     	try {
-    		final String username = "mihec.korosec@gmail.com";
-            final String password = "qfmsqpjoqulakgmf";
+    		final String username = "lana.benedicic@gmail.com";
+            final String password = "xascrgmarruosbsm";
     		
     		Properties props = new Properties();
     		props.put("mail.smtp.auth", "true");

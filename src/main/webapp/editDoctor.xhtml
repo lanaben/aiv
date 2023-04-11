@@ -12,18 +12,18 @@
 <f:view>
 <h:form>
 
-		[ <a href="#{facesContext.externalContext.applicationContextPath}/faces/all.xhtml">All</a> |
-	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editPerson.xhtml?email=NULL">Add new person</a> |
-	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editDoctor.xhtml?email=NULL">Add new doctor</a>	|
-	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/patientsWithNoDoctor.xhtml?email=NULL">Patients no doctor</a> ]
+		[ <a href="#{facesContext.externalContext.applicationContextPath}/faces/all.xhtml">Vsi zdravniki in pacienti</a> |
+	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editPerson.xhtml?email=NULL">Dodaj pacienta</a> |
+	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editDoctor.xhtml?email=NULL">Dodaj zdravnika</a>|
+		<a href="#{facesContext.externalContext.applicationContextPath}/faces/patientsWithNoDoctor.xhtml?email=NULL">Pacienti brez zdravnika</a> ]
 	<hr />
 
 	<f:metadata>
 		<f:viewParam name="email" value="#{app.selectedEmailDoctor}" />
 	</f:metadata>
 	
-	Name: <h:inputText id="n_imeD" value="#{app.selectedDoctor.name}"/><br/>
-	Surname: <h:inputText id="n_priimekD" value="#{app.selectedDoctor.surname}"/><br/>
+	Ime: <h:inputText id="n_imeD" value="#{app.selectedDoctor.name}"/><br/>
+	Priimek: <h:inputText id="n_priimekD" value="#{app.selectedDoctor.surname}"/><br/>
 	E-mail: <h:inputText id="n_emailD" value="#{app.selectedDoctor.email}" validatorMessage="Insert valid e-mail">
 				<f:validateRequired />
 			</h:inputText> * <h:message for="n_emailD" style="color:red" />
