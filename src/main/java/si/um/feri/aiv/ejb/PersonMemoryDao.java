@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
+
+import si.um.feri.aiv.ejb.PersonDao;
 import si.um.feri.aiv.vao.Person;
 
 import jakarta.ejb.Stateless;

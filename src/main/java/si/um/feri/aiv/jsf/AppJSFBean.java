@@ -1,11 +1,15 @@
 package si.um.feri.aiv.jsf;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 import java.util.logging.Logger;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
+import jakarta.ejb.Remote;
+
 import si.um.feri.aiv.vao.Person;
 import si.um.feri.aiv.ejb.DoctorDao;
 import si.um.feri.aiv.ejb.DoctorMemoryDao;
@@ -18,9 +22,13 @@ import si.um.feri.aiv.opazovalci.PatientObserver1;
 
 @Named("app")
 @SessionScoped
-public class AppJSFBean implements Serializable {
+@Remote(RemoteInterface.class)
+public class AppJSFBean extends UnicastRemoteObject implements Serializable{
 
 	private static final long serialVersionUID = -8979220536758073133L;
+
+	public AppJSFBean() throws RemoteException {
+	}
 
 	Logger log = Logger.getLogger(AppJSFBean.class.toString());
 	
@@ -100,7 +108,16 @@ public class AppJSFBean implements Serializable {
 		}
 		return "all";
 	}
+
 	
+	public void connectPersonDoctor(String emailP, String emailD) throws RemoteException {
+		Person person = daoPerson.find(emailP);
+		Doctor doctor = daoDoctor.find(emailD);
+
+		System.out.println(person);
+		System.out.println(doctor);
+	}
+
 	public void deletePerson(Person o) throws Exception {
 		daoPerson.delete(o.getEmail());
 	}
