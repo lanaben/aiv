@@ -11,7 +11,6 @@ import si.um.feri.aiv.ejb.PersonDao;
 import si.um.feri.aiv.vao.Person;
 
 import jakarta.ejb.Stateless;
-
 @Stateless
 public class PersonMemoryDao implements PersonDao {
 

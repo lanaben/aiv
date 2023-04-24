@@ -22,8 +22,7 @@ import si.um.feri.aiv.opazovalci.PatientObserver1;
 
 @Named("app")
 @SessionScoped
-@Remote(RemoteInterface.class)
-public class AppJSFBean extends UnicastRemoteObject implements Serializable{
+public class AppJSFBean implements Serializable{
 
 	private static final long serialVersionUID = -8979220536758073133L;
 

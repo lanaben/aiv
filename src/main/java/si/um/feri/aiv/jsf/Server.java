@@ -1,11 +1,13 @@
-package si.um.feri.aiv.jsf;
+// package si.um.feri.aiv.jsf;
 
-import java.rmi.Naming;
-import java.rmi.Remote;
+// import si.um.feri.aiv.jsf.AppJSFBean;
 
-public class Server {
-  public static void main(String[] args) throws Exception {
-		AppJSFBean c = new AppJSFBean();
-		Naming.bind("//localhost/FirstLectures", c);
-	}
-}
+// import java.rmi.Naming;
+// import java.rmi.Remote;
+
+// public class Server {
+//   public static void main(String[] args) throws Exception {
+// 		AppJSFBean c = AppJSFBean.getInstance();
+// 		Naming.bind("//localhost/test", c);
+// 	}
+// }
