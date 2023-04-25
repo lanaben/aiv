@@ -22,12 +22,14 @@ import si.um.feri.aiv.opazovalci.PatientObserver1;
 
 @Named("app")
 @SessionScoped
-public class AppJSFBean implements Serializable{
+public class AppJSFBean extends UnicastRemoteObject implements AppJSF{
+
+	public AppJSFBean() throws RemoteException {
+
+	}
 
 	private static final long serialVersionUID = -8979220536758073133L;
 
-	public AppJSFBean() throws RemoteException {
-	}
 
 	Logger log = Logger.getLogger(AppJSFBean.class.toString());
 	
@@ -110,11 +112,8 @@ public class AppJSFBean implements Serializable{
 
 	
 	public void connectPersonDoctor(String emailP, String emailD) throws RemoteException {
-		Person person = daoPerson.find(emailP);
-		Doctor doctor = daoDoctor.find(emailD);
-
-		System.out.println(person);
-		System.out.println(doctor);
+		System.out.println(emailP);
+		System.out.println(emailD);
 	}
 
 	public void deletePerson(Person o) throws Exception {
