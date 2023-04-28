@@ -4,8 +4,13 @@ import java.util.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
+@Entity
 public class Doctor {
 	
 	public Doctor() {
@@ -28,6 +33,12 @@ public class Doctor {
 	private String email;
 	private Double numPatient;
 	private String id;
+	private List<Person> petientsList;
+
+	@OneToMany
+	public List<Person> getpetientsList() {
+		return petientsList;
+	}
 
 	public String getName() {
 		return name;
@@ -61,6 +72,7 @@ public class Doctor {
 		this.numPatient = numPatient;
 	}
 	
+	@Id
 	public String getId() {
 		return id;
 	}

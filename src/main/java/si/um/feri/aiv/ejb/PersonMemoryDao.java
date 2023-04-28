@@ -7,13 +7,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import si.um.feri.aiv.vao.Person;
-
+import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 
 @Stateless
+@Local(PersonDao.class)
 public class PersonMemoryDao implements PersonDao {
 
 	Logger log=Logger.getLogger(PersonMemoryDao.class.toString());
+
+	@PersistenceContext(unitName = "demoUnit")
+	EntityManager em;
 	
 	private static PersonMemoryDao instance = new PersonMemoryDao();
 	
@@ -26,35 +33,36 @@ public class PersonMemoryDao implements PersonDao {
 	@Override
 	public List<Person> getAll() {
 		log.info("DAO: get all");
-		return people;
+		return em.createQuery("select o from Oseba o").getResultList();
 	}
 	
 	@Override
+	public Person find(int id) {
+		log.info("EJB BEAN: najdi(id)");
+		return em.find(Person.class, id);
+	}
+
+	@Override
 	public Person find(String email)  {
 		log.info("DAO: finding "+email);
-		for (Person o : people)
-			if (o.getEmail().equals(email))
-				return o;
-		return null;
+		Query q = em.createQuery("select o from Person o where o.email = :e");
+		q.setParameter("e", email);
+		return (Person)q.getSingleResult();
 	}
 	
 	@Override
 	public void save(Person o)  {
 		log.info("DAO: saving "+o);
-		if(find(o.getEmail())!=null) {
-			log.info("DAO: editing "+o);
-			delete(o.getEmail());
-		}
-		people.add(o);
+		em.persist(o);
 	}
 	
 	@Override
 	public void delete(String email) {
 		log.info("DAO: deleting "+email);
-		for (Iterator<Person> i = people.iterator(); i.hasNext();) {
-			if (i.next().getEmail().equals(email))
-				i.remove();
-		}
+		Query q = em.createQuery("select o from Person o where o.email = :e");
+		q.setParameter("e", email);
+		Person p = (Person)q.getSingleResult();
+		em.remove(p);
 	}
 	
 }

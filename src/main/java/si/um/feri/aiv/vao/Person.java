@@ -10,8 +10,16 @@ import java.util.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 
+@Entity
 public class Person implements Serializable {
 
 	public Person() {
@@ -19,6 +27,16 @@ public class Person implements Serializable {
 	}
 
 	public Person(String ime, String priimek, String email, String datum, String besedilo, Doctor patientsDoctor) {
+		this.email = email;
+		this.name = ime;
+		this.surname = priimek;
+		timestamp = new GregorianCalendar();
+		this.date = datum;
+		this.text = besedilo;
+		this.patientsDoctor = patientsDoctor;
+	}
+
+	public Person(String ime, String priimek, String email, String datum, String besedilo, Doctor patientsDoctor, int id) {
 		this.email = email;
 		this.name = ime;
 		this.surname = priimek;
@@ -36,6 +54,7 @@ public class Person implements Serializable {
 	private String date;
 	private String text;
 	private Doctor patientsDoctor;
+	private int id;
 
 	private List<IObserver> patientsObservers1 = new ArrayList<>();
 	private List<IObserver> patientsObservers2 = new ArrayList<>();
@@ -118,12 +137,23 @@ public class Person implements Serializable {
 		this.text = text;
 	}
 
+	@ManyToOne(fetch=FetchType.EAGER)
 	public Doctor getPatientsDoctor() {
 		return patientsDoctor;
 	}
 
 	public void setPatientsDoctor(Doctor patientsDoctor) {
 		this.patientsDoctor = patientsDoctor;
+	}
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd. MM. yyyy HH:mm:ss");

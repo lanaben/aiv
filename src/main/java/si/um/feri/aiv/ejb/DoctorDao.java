@@ -10,6 +10,7 @@ public interface DoctorDao {
 
 	List<Doctor> getAll();
 	Doctor find(String email);
+	Doctor find(int id);
 	void save(Doctor o);
 	void delete(String email);
 	
