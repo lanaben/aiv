@@ -14,11 +14,11 @@ import jakarta.validation.constraints.NotBlank;
 public class Doctor {
 	
 	public Doctor() {
-		this("", "","", 0.0);
+		this("", "","", 0);
 	}
 	
 
-	public Doctor(String ime, String priimek, String email, Double steviloPac) {
+	public Doctor(String ime, String priimek, String email, int steviloPac) {
 		this.name = ime;
 		this.surname = priimek;
 		this.email = email;
@@ -31,13 +31,17 @@ public class Doctor {
 	private String name;
 	private String surname;
 	private String email;
-	private Double numPatient;
+	private int numPatient;
 	private String id;
-	private List<Person> petientsList;
+	private List<Person> patientsList;
 
 	@OneToMany
-	public List<Person> getpetientsList() {
-		return petientsList;
+	public List<Person> getPatientsList() {
+		return patientsList;
+	}
+
+	public void setPatientsList(List<Person> patientsList) {
+		this.patientsList = patientsList;
 	}
 
 	public String getName() {
@@ -64,11 +68,11 @@ public class Doctor {
 		this.email = email;
 	}
 	
-	public Double getNumPatient() {
+	public int getNumPatient() {
 		return numPatient;
 	}
 
-	public void setNumPatient(Double numPatient) {
+	public void setNumPatient(int numPatient) {
 		this.numPatient = numPatient;
 	}
 	

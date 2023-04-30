@@ -11,7 +11,7 @@ public interface PersonDao {
 	List<Person> getAll();
 	Person find(String email);
 	Person find(int id);
-	void save(Person o);
+	void save(Person o, Boolean isSave);
 	void delete(String email);
 	
 }

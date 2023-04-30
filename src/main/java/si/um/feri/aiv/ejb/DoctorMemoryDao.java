@@ -9,6 +9,7 @@ import si.um.feri.aiv.vao.Doctor;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
@@ -42,16 +43,28 @@ public class DoctorMemoryDao implements DoctorDao {
 	
 	@Override
 	public Doctor find(String email)  {
-		log.info("DAO: finding "+email);
-		Query q = em.createQuery("select o from Doctor o where o.email = :e");
-		q.setParameter("e", email);
-		return (Doctor)q.getSingleResult();
+		try {
+			log.info("DAO: finding "+email);
+			Query q = em.createQuery("select o from Doctor o where o.email = :e");
+			q.setParameter("e", email);
+			return (Doctor)q.getSingleResult();
+		}
+		catch (NoResultException e) {
+			return new Doctor();
+		}		
 	}
 	
 	@Override
-	public void save(Doctor o)  {
-		log.info("DAO: saving "+o);
-		em.persist(o);
+	public void save(Doctor o, Boolean isSave)  {
+		if (isSave) {
+			log.info("DAO: saving "+o);
+			log.info("Save mail");
+			em.persist(o);
+		}
+		else {
+			log.info("Refresh mail");
+			em.merge(o);
+		}
 	}
 	
 	@Override

@@ -3,6 +3,9 @@ package si.um.feri.aiv.jsf;
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
+
+import javax.sound.midi.MidiDevice.Info;
+
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -20,16 +23,22 @@ import si.um.feri.aiv.opazovalci.PatientObserver1;
 @SessionScoped
 public class AppJSFBean implements Serializable {
 
+	
+
 	private static final long serialVersionUID = -8979220536758073133L;
 
 	Logger log = Logger.getLogger(AppJSFBean.class.toString());
+	
+	
 	
 	@EJB
 	private PersonDao daoPerson = PersonMemoryDao.getInstance();
 	
 	private Person selectedPerson = new Person();
 	
-	private String selectedEmailPerson;
+	private static String selectedEmailPerson;
+
+	Boolean isSavePerson;
 
 	private String selectedPatientsDoctor;
 	
@@ -41,6 +50,7 @@ public class AppJSFBean implements Serializable {
 	}
 	
 	public String savePerson() throws Exception {
+		
 		
 		if(oldPerson.getEmail() != "") {
 			selectedPerson.createObserver2(selectedPerson);
@@ -85,7 +95,7 @@ public class AppJSFBean implements Serializable {
 
 				//set patients doctor
 				selectedPerson.setPatientsDoctor(doctors.get(index));
-				daoPerson.save(selectedPerson);
+				daoPerson.save(selectedPerson, isSavePerson);
 				
 				//email to patient and doctor it was chosen
 				Email emailDoctor = new Email(doctors.get(index).getEmail(), "lana.benedicic@gmail.com", "Pacient je bil dodan", "Dobili ste novega pacienta");
@@ -96,7 +106,7 @@ public class AppJSFBean implements Serializable {
 		
 			
 		} else if (this.selectedPatientsDoctor == null){
-			daoPerson.save(selectedPerson);
+			daoPerson.save(selectedPerson, isSavePerson);
 		}
 		return "all";
 	}
@@ -108,12 +118,16 @@ public class AppJSFBean implements Serializable {
 	public void setSelectedEmailPerson(String email) throws Exception {
 		selectedEmailPerson = email;
 		selectedPerson = daoPerson.find(email);
-		if(selectedPerson == null) {
+		if(selectedPerson.getEmail() == "") {
 			selectedPerson = new Person();
 			oldPerson = new Person();
+			isSavePerson = true;
+			log.info("issaveperson true");
 		}
-		else if(selectedPerson != null) {
+		else if(selectedPerson.getEmail() != "") {
 			oldPerson = selectedPerson;
+			log.info("issaveperson false");
+			isSavePerson = false;
 		}
 	}
 	
@@ -143,13 +157,14 @@ public class AppJSFBean implements Serializable {
 	
 	private String selectedEmailDoctor;
 
-	
+	Boolean isSaveDoctor;
+
 	public List<Doctor> getAllDoctors() throws Exception {
 		return daoDoctor.getAll();
 	}
 	
 	public String saveDoctor() throws Exception {
-		daoDoctor.save(selectedDoctor);
+		daoDoctor.save(selectedDoctor, isSaveDoctor);
 		return "all";
 	}
 	
@@ -160,7 +175,13 @@ public class AppJSFBean implements Serializable {
 	public void setSelectedEmailDoctor(String email) throws Exception {
 		selectedEmailDoctor = email;
 		selectedDoctor = daoDoctor.find(email);
-		if(selectedDoctor == null) selectedDoctor = new Doctor();
+		if(selectedDoctor.getEmail() == "") {
+			selectedDoctor = new Doctor();
+			isSaveDoctor = true;
+		}
+		else if(selectedDoctor.getEmail() != "") {
+			isSaveDoctor = false;
+		}
 	}
 	
 	public String getSelectedEmailDoctor() {

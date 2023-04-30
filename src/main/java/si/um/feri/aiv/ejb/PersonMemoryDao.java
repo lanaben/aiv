@@ -10,6 +10,7 @@ import si.um.feri.aiv.vao.Person;
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
@@ -33,7 +34,7 @@ public class PersonMemoryDao implements PersonDao {
 	@Override
 	public List<Person> getAll() {
 		log.info("DAO: get all");
-		return em.createQuery("select o from Oseba o").getResultList();
+		return em.createQuery("select o from Person o").getResultList();
 	}
 	
 	@Override
@@ -45,15 +46,27 @@ public class PersonMemoryDao implements PersonDao {
 	@Override
 	public Person find(String email)  {
 		log.info("DAO: finding "+email);
-		Query q = em.createQuery("select o from Person o where o.email = :e");
-		q.setParameter("e", email);
-		return (Person)q.getSingleResult();
+		try {
+			Query q = em.createQuery("select o from Person o where o.email = :e");
+			q.setParameter("e", email);
+			return (Person)q.getSingleResult();
+		}
+		catch (NoResultException e) {
+			return new Person();
+		}
 	}
 	
 	@Override
-	public void save(Person o)  {
-		log.info("DAO: saving "+o);
-		em.persist(o);
+	public void save(Person o, Boolean isSave)  {
+		if (isSave) {
+			log.info("DAO: saving "+o);
+			log.info("Save mail");
+			em.persist(o);
+		}
+		else {
+			log.info("Refresh mail");
+			em.merge(o);
+		}
 	}
 	
 	@Override
