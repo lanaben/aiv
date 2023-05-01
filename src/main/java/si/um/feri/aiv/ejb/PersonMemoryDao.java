@@ -18,7 +18,7 @@ import jakarta.persistence.Query;
 @Local(PersonDao.class)
 public class PersonMemoryDao implements PersonDao {
 
-	Logger log=Logger.getLogger(PersonMemoryDao.class.toString());
+	Logger log = Logger.getLogger(PersonMemoryDao.class.toString());
 
 	@PersistenceContext(unitName = "demoUnit")
 	EntityManager em;

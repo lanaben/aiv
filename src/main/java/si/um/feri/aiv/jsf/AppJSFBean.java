@@ -4,32 +4,27 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
 
-import javax.sound.midi.MidiDevice.Info;
-
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import si.um.feri.aiv.vao.Person;
-import si.um.feri.aiv.ejb.DoctorDao;
-import si.um.feri.aiv.ejb.DoctorMemoryDao;
-import si.um.feri.aiv.ejb.PersonDao;
-import si.um.feri.aiv.ejb.PersonMemoryDao;
+import si.um.feri.aiv.vao.Visit;
+import si.um.feri.aiv.ejb.*;
+import si.um.feri.aiv.strategija.emailClass;
+import si.um.feri.aiv.strategija.visitsInterface;
+import si.um.feri.aiv.strategija.Emails.emailPosebnosti;
+import si.um.feri.aiv.strategija.Emails.emailZdravila;
 import si.um.feri.aiv.vao.Doctor;
 
 import si.um.feri.aiv.vmesni_nivo.Email;
 import si.um.feri.aiv.opazovalci.PatientObserver1;
-
 @Named("app")
 @SessionScoped
 public class AppJSFBean implements Serializable {
 
-	
-
 	private static final long serialVersionUID = -8979220536758073133L;
 
 	Logger log = Logger.getLogger(AppJSFBean.class.toString());
-	
-	
 	
 	@EJB
 	private PersonDao daoPerson = PersonMemoryDao.getInstance();
@@ -214,4 +209,63 @@ public class AppJSFBean implements Serializable {
 		}
 		return patientsWithNoDoc;
 	}
+
+	@EJB
+	private VisitDao daoVisit = VisitMemoryDao.getInstance();
+
+	private Visit selectedVisit = new Visit();
+
+	private String selectedVisitPatientEmail;
+
+	private String selectedVisitDoctorEmail;
+
+	private emailClass email = new emailClass(new emailPosebnosti());
+
+	public List<Visit> getAllVisits() throws Exception {
+		return daoVisit.getAll();
+	}
+	
+	public String saveVisit() throws Exception {
+
+		Person personVisit = daoPerson.find(selectedVisitPatientEmail);
+		Doctor doctorVisit = daoDoctor.find(selectedVisitDoctorEmail);
+
+		selectedVisit.setVisitsPerson(personVisit);
+		selectedVisit.setVisitsDoctor(doctorVisit);
+
+		email.izberiVrstoMaila(selectedVisit, personVisit);
+
+		daoVisit.save(selectedVisit);
+
+		return "all";
+	}
+	
+	public void deleteVisit(Visit i) throws Exception {
+		daoVisit.delete(i.getId());
+	}
+
+	public Visit getSelectedVisit() {
+		return selectedVisit;
+	}
+
+	public void setSelectedVisit(Visit selectedVisit) {
+		this.selectedVisit = selectedVisit;
+	}
+
+	public void setselectedVisitPatientEmail(String selectedVisitPatientEmail) throws Exception {
+		this.selectedVisitPatientEmail = selectedVisitPatientEmail;
+	}
+	
+	public String getselectedVisitPatientEmail() {
+		return selectedVisitPatientEmail;
+	}
+
+	public void setselectedVisitDoctorEmail(String selectedVisitDoctorEmail) throws Exception {
+		this.selectedVisitDoctorEmail = selectedVisitDoctorEmail;
+	}
+	
+	public String getselectedVisitDoctorEmail() {
+		return selectedVisitDoctorEmail;
+	}
+
 }

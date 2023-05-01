@@ -34,6 +34,7 @@ public class Doctor {
 	private int numPatient;
 	private String id;
 	private List<Person> patientsList;
+	private List<Visit> visitsList;
 
 	@OneToMany
 	public List<Person> getPatientsList() {
@@ -42,6 +43,15 @@ public class Doctor {
 
 	public void setPatientsList(List<Person> patientsList) {
 		this.patientsList = patientsList;
+	}
+
+	@OneToMany
+	public List<Visit> getVisitsList() {
+		return visitsList;
+	}
+
+	public void setVisitsList(List<Visit> visitsList) {
+		this.visitsList = visitsList;
 	}
 
 	public String getName() {

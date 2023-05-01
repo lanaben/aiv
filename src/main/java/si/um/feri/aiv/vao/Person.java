@@ -17,6 +17,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -55,6 +56,7 @@ public class Person implements Serializable {
 	private String text;
 	private Doctor patientsDoctor;
 	private int id;
+	private List<Visit> visitsList;
 
 	private List<IObserver> patientsObservers1 = new ArrayList<>();
 	private List<IObserver> patientsObservers2 = new ArrayList<>();
@@ -137,7 +139,7 @@ public class Person implements Serializable {
 		this.text = text;
 	}
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	public Doctor getPatientsDoctor() {
 		return patientsDoctor;
 	}
@@ -146,8 +148,17 @@ public class Person implements Serializable {
 		this.patientsDoctor = patientsDoctor;
 	}
 
+	@OneToMany
+	public List<Visit> getVisitsList() {
+		return visitsList;
+	}
+
+	public void setVisitsList(List<Visit> visitsList) {
+		this.visitsList = visitsList;
+	}
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}

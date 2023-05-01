@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Vstopi v sistem e-zdravje</title>
+</h:head>
+
+<h:body>
+<f:view>
+<h:form>
+
+		[ <a href="#{facesContext.externalContext.applicationContextPath}/faces/all.xhtml">Vsi zdravniki in pacienti</a> |
+	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editPerson.xhtml?email=NULL">Dodaj pacienta</a> |
+	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editDoctor.xhtml?email=NULL">Dodaj zdravnika</a>|
+		<a href="#{facesContext.externalContext.applicationContextPath}/faces/patientsWithNoDoctor.xhtml?email=NULL">Pacienti brez zdravnika</a> ]
+	<hr />
+
+	Datum obiska: <h:inputText id="n_datum" value="#{app.selectedVisit.date}"/><br/>
+	Čas obiska: <h:inputText id="n_cas" value="#{app.selectedVisit.time}"/><br/>
+	Posebnosti: <h:inputText id="n_posebnosti" value="#{app.selectedVisit.comment}"/><br/>
+	Predpisana zdravila: <h:inputText id="n_zdravila" value="#{app.selectedVisit.medicine}"/><br/><br/>
+
+	Pacient: 
+
+	<h:selectOneListbox  value="#{app.selectedVisitPatientEmail}">
+		 <f:selectItems value="#{app.allPeople}" var="person" itemLabel="#{person.name}" itemValue="#{person.email}"/> 
+	</h:selectOneListbox>
+	<br/>
+	
+	Zdravnik: 
+
+     <h:selectOneListbox  value="#{app.selectedVisitDoctorEmail}">
+     	 <f:selectItems value="#{app.allDoctors}" var="doctor" itemLabel="#{doctor.name}" itemValue="#{doctor.email}"/> 
+     </h:selectOneListbox>
+     <br/>
+	<h:commandButton value="Zaključi" action="#{app.saveVisit}"/>
+	
+</h:form>
+
+</f:view>
+</h:body>
+
+</html>
+
+
+
+				
+					

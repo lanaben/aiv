@@ -16,6 +16,7 @@
 		[ <a href="#{facesContext.externalContext.applicationContextPath}/faces/all.xhtml">Vsi zdravniki in pacienti</a> |
 	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editPerson.xhtml?email=NULL">Dodaj pacienta</a> |
 	  <a href="#{facesContext.externalContext.applicationContextPath}/faces/editDoctor.xhtml?email=NULL">Dodaj zdravnika</a>|
+		<a href="#{facesContext.externalContext.applicationContextPath}/faces/addVisit.xhtml?email=NULL">Dodaj obisk</a>|
 		<a href="#{facesContext.externalContext.applicationContextPath}/faces/patientsWithNoDoctor.xhtml?email=NULL">Pacienti brez zdravnika</a> ]
 	<hr />
 
@@ -55,6 +56,18 @@
 	   <p:commandButton value="Izbriši" type="button" onclick="PF('dlg2').show();" style="width:70px;height:30px;text-align:center"/>
        <p:dialog header="Ste prepričani?" widgetVar="dlg2" modal="true" minHeight="120">
        		<h:commandLink value="Da, izbriši" actionListener="#{app.deleteDoctor(i)}" />
+       </p:dialog>
+		</h:column>
+	</h:dataTable>
+
+	Obiski: 
+	
+	<h:dataTable value="#{app.allVisits}" var="i">
+		<h:column>#{i}</h:column> 
+		<h:column>
+	   <p:commandButton value="Izbriši" type="button" onclick="PF('dlg2').show();" style="width:70px;height:30px;text-align:center"/>
+       <p:dialog header="Ste prepričani?" widgetVar="dlg2" modal="true" minHeight="120">
+       		<h:commandLink value="Da, izbriši" />
        </p:dialog>
 		</h:column>
 	</h:dataTable>

@@ -11,6 +11,7 @@
 		
 		<class>si.um.feri.aiv.vao.Person</class>
 		<class>si.um.feri.aiv.vao.Doctor</class>
+		<class>si.um.feri.aiv.vao.Visit</class>
 		
 		 
 		<properties>
