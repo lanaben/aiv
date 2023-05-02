@@ -4,6 +4,7 @@ import java.util.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import jakarta.json.bind.annotation.JsonbTransient;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -86,6 +87,7 @@ public class Doctor {
 		this.numPatient = numPatient;
 	}
 	
+	@JsonbTransient
 	@Id
 	public String getId() {
 		return id;

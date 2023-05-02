@@ -27,6 +27,26 @@
 		    <classifier>jakarta</classifier>
 		</dependency>
 
+		<dependency>
+				<groupId>org.eclipse</groupId>
+				<artifactId>yasson</artifactId>
+				<version>2.0.4</version>
+		</dependency>
+
+
+		<dependency>
+				<groupId>jakarta.json</groupId>
+				<artifactId>jakarta.json-api</artifactId>
+				<version>2.0.1</version>
+		</dependency>
+
+		<dependency>
+				<groupId>jakarta.json.bind</groupId>
+				<artifactId>jakarta.json.bind-api</artifactId>
+				<version>2.0.0</version>
+		</dependency>
+
+
 
 		<!-- https://mvnrepository.com/artifact/com.sun.mail/smtp -->
 
@@ -73,8 +93,16 @@
 					<!-- this is false by default -->
 					<generateClient>true</generateClient>
 				</configuration>
-		</plugin>
+			</plugin>
 
+			<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.4.0</version>
+					<configuration>
+							<mainClass>si.um.feri.aiv.client.RestClientJEEDemo</mainClass>
+					</configuration>
+			</plugin>
 	
 		</plugins>
 	</build>
