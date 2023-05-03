@@ -46,7 +46,6 @@ public class AppJSFBean implements Serializable {
 	
 	public String savePerson() throws Exception {
 		
-		
 		if(oldPerson.getEmail() != "") {
 			selectedPerson.createObserver2(selectedPerson);
 		}

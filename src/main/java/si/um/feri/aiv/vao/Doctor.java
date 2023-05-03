@@ -1,18 +1,18 @@
 package si.um.feri.aiv.vao;
 
+import java.io.Serializable;
 import java.util.*;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import jakarta.json.bind.annotation.JsonbTransient;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Doctor {
+public class Doctor implements Serializable {
 	
 	public Doctor() {
 		this("", "","", 0);
@@ -37,6 +37,7 @@ public class Doctor {
 	private List<Person> patientsList;
 	private List<Visit> visitsList;
 
+	@JsonbTransient
 	@OneToMany
 	public List<Person> getPatientsList() {
 		return patientsList;
@@ -46,6 +47,7 @@ public class Doctor {
 		this.patientsList = patientsList;
 	}
 
+	@JsonbTransient
 	@OneToMany
 	public List<Visit> getVisitsList() {
 		return visitsList;

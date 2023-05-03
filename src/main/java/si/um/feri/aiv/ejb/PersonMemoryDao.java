@@ -61,6 +61,8 @@ public class PersonMemoryDao implements PersonDao {
 		if (isSave) {
 			log.info("DAO: saving "+o);
 			log.info("Save mail");
+			log.info("Moj save person");
+			log.info(o.getPatientsDoctor().getId());
 			em.persist(o);
 		}
 		else {

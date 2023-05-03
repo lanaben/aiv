@@ -11,6 +11,8 @@ import java.util.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -139,7 +141,8 @@ public class Person implements Serializable {
 		this.text = text;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	// @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToOne
 	public Doctor getPatientsDoctor() {
 		return patientsDoctor;
 	}
@@ -157,6 +160,7 @@ public class Person implements Serializable {
 		this.visitsList = visitsList;
 	}
 
+	@JsonbTransient
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {

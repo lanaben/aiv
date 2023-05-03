@@ -59,6 +59,8 @@ public class DoctorMemoryDao implements DoctorDao {
 		if (isSave) {
 			log.info("DAO: saving "+o);
 			log.info("Save mail");
+			log.info("Moj save doctor");
+			log.info(o.getId());
 			em.persist(o);
 		}
 		else {
