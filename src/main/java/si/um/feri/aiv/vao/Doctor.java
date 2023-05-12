@@ -37,7 +37,8 @@ public class Doctor implements Serializable {
 	private List<Person> patientsList;
 	private List<Visit> visitsList;
 
-	@JsonbTransient
+
+	@JsonbTransient //spusti ta podatek v API responsu, ker ne zna pretvorit lista v JSON
 	@OneToMany
 	public List<Person> getPatientsList() {
 		return patientsList;

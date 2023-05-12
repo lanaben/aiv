@@ -15,6 +15,8 @@ public class RestClientJEEDemo {
     static final URI ZDRAVNIKI_URI = URI.create("http://localhost:8080/FirstLectures/faces/api/zdravniki/");
     static final URI PACIENTI_URI = URI.create("http://localhost:8080/FirstLectures/faces/api/pacienti/");
 
+    static final URI GET_PACIENTI_URI = URI.create("http://localhost:8080/FirstLectures/faces/api/zdravniki/patients/");
+
     HttpClient client = HttpClient.newBuilder().build();
     Jsonb jsonb= JsonbBuilder.create();
 
@@ -41,6 +43,12 @@ public class RestClientJEEDemo {
         System.out.println(response.body());
     }
 
+    void getPatients() throws Exception {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(GET_PACIENTI_URI).build();
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
 
     void dodajPacienta(Person o) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
@@ -56,19 +64,23 @@ public class RestClientJEEDemo {
   
         RestClientJEEDemo client = new RestClientJEEDemo();
 
-        client.getDoctors();
+        // client.getDoctors();
+
+        // client.getPatients();
 
         Doctor d = new Doctor("miha", "kor", "mihi.kor@gmail.com", 3);
 
-        client.dodajZdravnika(d);
 
         // client.getDoctor(d.getEmail());
 
         // System.out.println("Zdravnik je bil uspešno dodan: " + d.toString());
 
-        Person p = new Person("Lana", "Benedičič", "lana.benedicic@gmail.com", "12.12.2000", "test", d);
+        Person p = new Person("Lana", "Benedičič", "lana.benedicic@gmail.com", "12.12.2000", "test", null);
+
+        client.dodajZdravnika(d);
 
         client.dodajPacienta(p);
+        
 
         // System.out.println("Pacient je bil uspešno dodan: " + p.toString());
 

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.print.Doc;
 
 @Path("/pacienti")
 @Produces(MediaType.APPLICATION_JSON)
@@ -35,10 +34,13 @@ public class PersonResource {
 		return "PersonResource";
 	}
 
+
 	@GET
 	public Collection<Person> getAllPeople() {
 		return daoPerson.getAll();
 	}
+
+	
 
 	@GET
 	@Path("/{email}")
@@ -48,13 +50,11 @@ public class PersonResource {
 
 	@POST
 	public void addPerson(Person o) throws Exception {
-    System.out.println("Moj test dodaje before");
-		if(o.getPatientsDoctor().getEmail() != "") {
+		if (o.getPatientsDoctor() != null) {
 			Doctor doc = daoDoctor.find(o.getPatientsDoctor().getEmail());
 			o.setPatientsDoctor(doc);
 		} 
 		daoPerson.save(o, true);
-    System.out.println("Moj test dodaje after");
 	}
 
 	@PUT

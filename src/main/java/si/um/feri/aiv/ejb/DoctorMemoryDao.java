@@ -40,6 +40,7 @@ public class DoctorMemoryDao implements DoctorDao {
 		log.info("EJB BEAN: najdi(id)");
 		return em.find(Doctor.class, id);
 	}
+
 	
 	@Override
 	public Doctor find(String email)  {

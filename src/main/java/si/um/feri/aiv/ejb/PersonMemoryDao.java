@@ -37,6 +37,7 @@ public class PersonMemoryDao implements PersonDao {
 		return em.createQuery("select o from Person o").getResultList();
 	}
 	
+	
 	@Override
 	public Person find(int id) {
 		log.info("EJB BEAN: najdi(id)");
@@ -62,7 +63,6 @@ public class PersonMemoryDao implements PersonDao {
 			log.info("DAO: saving "+o);
 			log.info("Save mail");
 			log.info("Moj save person");
-			log.info(o.getPatientsDoctor().getId());
 			em.persist(o);
 		}
 		else {

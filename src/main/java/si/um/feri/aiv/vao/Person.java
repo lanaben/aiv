@@ -56,13 +56,14 @@ public class Person implements Serializable {
 	private Calendar timestamp;
 	private String date;
 	private String text;
-	private Doctor patientsDoctor;
+	private Doctor patientsDoctor = null;
 	private int id;
 	private List<Visit> visitsList;
 
 	private List<IObserver> patientsObservers1 = new ArrayList<>();
 	private List<IObserver> patientsObservers2 = new ArrayList<>();
 
+	
 	public void addPatientsObserver1(IObserver p) {
 		patientsObservers1.add(p);
 	}
@@ -151,6 +152,7 @@ public class Person implements Serializable {
 		this.patientsDoctor = patientsDoctor;
 	}
 
+	@JsonbTransient
 	@OneToMany
 	public List<Visit> getVisitsList() {
 		return visitsList;
