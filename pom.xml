@@ -46,6 +46,19 @@
 				<version>2.0.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.wildfly</groupId>
+			<artifactId>wildfly-jms-client-bom</artifactId>
+			<version>26.0.1.Final</version>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+				<groupId>jakarta.jms</groupId>
+				<artifactId>jakarta.jms-api</artifactId>
+				<version>3.0.0</version>
+		</dependency>
+
 
 
 		<!-- https://mvnrepository.com/artifact/com.sun.mail/smtp -->
@@ -100,7 +113,7 @@
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>1.4.0</version>
 					<configuration>
-							<mainClass>si.um.feri.aiv.client.RestClientJEEDemo</mainClass>
+							<mainClass>si.um.feri.aiv.client.PosiljateljVrstaSimplifiedAPI</mainClass>
 					</configuration>
 			</plugin>
 	
