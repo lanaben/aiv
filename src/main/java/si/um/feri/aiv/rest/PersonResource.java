@@ -34,13 +34,10 @@ public class PersonResource {
 		return "PersonResource";
 	}
 
-
 	@GET
 	public Collection<Person> getAllPeople() {
 		return daoPerson.getAll();
 	}
-
-	
 
 	@GET
 	@Path("/{email}")
@@ -55,13 +52,5 @@ public class PersonResource {
 			o.setPatientsDoctor(doc);
 		} 
 		daoPerson.save(o, true);
-	}
-
-	@PUT
-	@Path("/{email}")
-	public void spremeniPersonja(Person o,@PathParam("email") String email) throws Exception {
-		if (daoPerson.find(email)==null)
-			throw new Exception("Person še ne obstaja.");
-		daoPerson.save(o, false);
 	}
 }

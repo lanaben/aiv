@@ -51,7 +51,6 @@ public class DoctorResource {
 		return daoDoctor.getAll();
 	}
 
-
 	@POST
 	@Path("/link")
 	public void linkPatientAndDoctor(LinkResponseInterface request) throws Exception {
@@ -63,23 +62,8 @@ public class DoctorResource {
 		daoPerson.save(per, false);
 	}
 
-
-	// @GET
-	// @Path("/{email}")
-	// public Doctor getDoctor(@PathParam("email") String email) {
-	// 	return daoDoctor.find(email);
-	// }
-
 	@POST
 	public void addDoctor(Doctor o) throws Exception {
 		daoDoctor.save(o, true);
 	}
-
-	// @PUT
-	// @Path("/{email}")
-	// public void spremeniDoctorja(Doctor o,@PathParam("email") String email) throws Exception {
-	// 	if (daoDoctor.find(email)==null)
-	// 		throw new Exception("Doctor še ne obstaja.");
-	// 	daoDoctor.save(o, false);
-	// }
 }
