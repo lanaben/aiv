@@ -64,7 +64,7 @@ public class RestClient {
   
         RestClient client = new RestClient();
 
-        Doctor d = new Doctor("miha", "kor", "mihi.kor@gmail.com", 3);
+        Doctor d = new Doctor("janez", "novak", "janez@gmail.com", 3);
         
         client.dodajZdravnika(d);
 
