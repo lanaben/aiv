@@ -28,13 +28,6 @@ public class PersonResource {
 	private DoctorDao daoDoctor = DoctorMemoryDao.getInstance();
 
 	@GET
-	@Produces({MediaType.TEXT_PLAIN})
-	@Path("/info")
-	public String info() {
-		return "PersonResource";
-	}
-
-	@GET
 	public Collection<Person> getAllPeople() {
 		return daoPerson.getAll();
 	}

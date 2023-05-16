@@ -6,7 +6,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import si.um.feri.aiv.ejb.DoctorDao;
 import si.um.feri.aiv.ejb.DoctorMemoryDao;
-import si.um.feri.aiv.ejb.LinkResponseInterface;
 import si.um.feri.aiv.ejb.PersonDao;
 import si.um.feri.aiv.ejb.PersonMemoryDao;
 import si.um.feri.aiv.vao.Doctor;
@@ -28,13 +27,6 @@ public class DoctorResource {
 	private PersonDao daoPerson = PersonMemoryDao.getInstance();
 
 	@GET
-	@Produces({MediaType.TEXT_PLAIN})
-	@Path("/info")
-	public String info() {
-		return "DoctorResource";
-	}
-
-	@GET
 	public Collection<Doctor> getAllDoctors() {
 		 return daoDoctor.getAll();
 	}
@@ -43,12 +35,6 @@ public class DoctorResource {
 	@Path("/patients")
 	public Collection<Person> getPatients() {
 		return daoPerson.getAll();
-	}
-
-	@GET
-	@Path("/available")
-	public Collection<Doctor> getAvailableDoctors() {
-		return daoDoctor.getAll();
 	}
 
 	@POST

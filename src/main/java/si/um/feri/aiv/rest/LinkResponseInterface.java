@@ -1,4 +1,4 @@
-package si.um.feri.aiv.ejb;
+package si.um.feri.aiv.rest;
 
 import si.um.feri.aiv.vao.Doctor;
 import si.um.feri.aiv.vao.Person;

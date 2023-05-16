@@ -30,13 +30,6 @@ public class RestClient {
         System.out.println(response.toString());
     }
 
-    void getDoctor(String email) throws Exception {
-        URI ZDRAVNIKI_URI_MAIL = URI.create("http://localhost:8080/FirstLectures/faces/api/zdravniki/"+email);
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(ZDRAVNIKI_URI_MAIL).build();
-        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-    }
-
     void getDoctors() throws Exception {
         HttpRequest request = HttpRequest.newBuilder().GET().uri(ZDRAVNIKI_URI).build();
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -65,12 +58,23 @@ public class RestClient {
         RestClient client = new RestClient();
 
         Doctor d = new Doctor("janez", "novak", "janez@gmail.com", 3);
+        Doctor d2 = new Doctor("jaka", "novak", "jaka@gmail.com", 3);
+        Doctor d3 = new Doctor("miha", "novak", "miha@gmail.com", 3);
         
         client.dodajZdravnika(d);
+        client.dodajZdravnika(d2);
+        client.dodajZdravnika(d3);
 
         Person p = new Person("Lana", "Benedičič", "lana.benedicic@gmail.com", "12.12.2000", "test", d);
+        Person p2 = new Person("Ana", "Benedičič", "ana.benedicic@gmail.com", "12.12.2000", "test", d2);
+        Person p3 = new Person("Sara", "Benedičič", "sara.benedicic@gmail.com", "12.12.2000", "test", d3);
 
         client.dodajPacienta(p);
+        client.dodajPacienta(p2);
+        client.dodajPacienta(p3);
+
+        client.getDoctors();
+        client.getPatients();
     }
 
 }
